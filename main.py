@@ -1,9 +1,9 @@
 from wormHead import *
 from random import randint
 
-gridX, gridY = 13,13
-
-grid = [[0]*gridX for i in range(gridY)]
+#initialise the board with a height and width
+gridWidth, gridHeight = 13,13
+grid = [[0]*gridWidth for i in range(gridHeight)]
 
 def place_apple():
     #pick random X,Y coordinate
