@@ -12,8 +12,8 @@ def place_apple():
 
     #keep cahnging chosen position until a valid spae is chosen
     while grid[appleX][appleY] != 0:
-        appleX = randint(0,len(grid) - 1)
-        appleY = randint(0,len(grid[0]) - 1)
+        appleX = randint(0,gridWidth - 1)
+        appleY = randint(0,gridHeight - 1)
 
     return [appleX, appleY]
 
