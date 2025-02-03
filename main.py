@@ -41,4 +41,7 @@ def gameLoop():
 
     #draw grid    
 
+def main():
+    pass
+
             
