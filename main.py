@@ -1,9 +1,6 @@
 from wormHead import *
 from random import randint
 
-#initialise the board with a height and width
-gridWidth, gridHeight = 13,13
-grid = [[0]*gridWidth for i in range(gridHeight)]
 
 def place_apple():
     #pick random X,Y coordinate
@@ -17,3 +14,25 @@ def place_apple():
 
     return [appleX, appleY]
 
+
+def display_grid(head, appleX, appleY):
+    pass
+
+def 
+
+def main():
+    #initialise the board with a height and width
+    gridWidth, gridHeight = 13,13
+    grid = [[0]*gridWidth for i in range(gridHeight)]
+
+    #initialise head
+
+    #get key inputs 
+
+    #move player 
+
+    #check colisions
+
+    #draw grid    
+
+main()
