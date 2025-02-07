@@ -1,8 +1,7 @@
 from wormHead import *
-from UI import *
+from GUI import *
 from highscoretable import *
 
-import pygame as py
 from random import randint
 
 #initialise the board height and width
@@ -25,28 +24,37 @@ def place_apple():
 
 
 def display_grid(head, appleX, appleY):
+	colour_dict = {
+		0: (0,0,0);
+		1: (240,100,200);
+		2: (80,230,120)
+	}
+#set grid to all 0s
     grid = [[0]*gridWidth for i in range(gridHeight)]
-
+	
     segment = head
-    
+
+	
+#loops through the entire worm and sets the elements in the grid to 1 where a segment is there
     while segment.nextNode() not None:
 	    x = segment.getPos()[0]
 	    y = segment.getPos()[1]
-
+	
 	    grid[x][y] = 1
 
 	    segment = segment.nextNode()
 
-    
+    #set the gid at the position of the apple to 2
     grid[appleX][appleY] = 2
 
     for i in range(0, gridWidth-1):
     	for j in range(0, gridHeight-1):
-    		colour = GET TYPE @ grid[i][j]
-    		DRAW SQUARE TO SCREEN
+    		colour = colour_dict[gid[i][j]]
+		#CALCULATE WORLD POSITION
+    		#DRAW SQUARE TO SCREEN
             
     
-    WRITE SCORE TO SCREEN
+    #WRITE SCORE TO SCREEN
 
 
 
