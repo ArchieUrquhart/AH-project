@@ -14,16 +14,18 @@ except mysql.connector.Error as err:
     
 else:
     #run insert
-    def add_game(game_username, game_points):
+    def add_game(game_username, game_score):
         cursor = cnx.cursor()
-        query = ("INSERT INTO gamedetails_testing(username, score) VALUES (%s,%i")
-        cursor.execute(query,(game_username, game_points))
+        #query to insert the username and score of the player who just played
+        query = ("INSERT INTO gamedetails_testing(username, score) VALUES ({},{})".format(game_username,game_score))
+        cursor.execute(query)
         cnx.commit()
+
         
     #get highscore data from database
     def get_table():
-        #run select
         cursor = cnx.cursor()
+        #query to get the required data for the highscore table
         query = ("SELECT username, MAX(score) as 'highscore', count(*) as 'games_played' FROM gamedetails_testing GROUP BY username")
         cursor.execute(query)
         table_entries = cursor.fetchall()
@@ -36,6 +38,7 @@ else:
             HighScores[i][1] = data[1]
             HighScores[i][2] = data[2]
 
+        sort_table(HighScores)
         return HighScores
             
     
@@ -57,3 +60,19 @@ else:
     
             #insert row into correct position
             table[pos] = temp
+    
+
+    def print2dArray(arrayname):
+        for i in range(len(arrayname)):
+            row = ""
+            for j in range(len(arrayname[i])):
+                row += str(arrayname[i][j]) + ","
+            # remove the last comma
+            row = row[:-1]
+            print(row)
+        print("")
+
+
+    add_game("'Owen Izedonmwen'",2900)
+    table = get_table()
+    print2dArray(table)
