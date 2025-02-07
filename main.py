@@ -24,11 +24,7 @@ def place_apple():
 
 
 def display_grid(head, appleX, appleY):
-	colour_dict = {
-		0: (0,0,0);
-		1: (240,100,200);
-		2: (80,230,120)
-	}
+
 #set grid to all 0s
     grid = [[0]*gridWidth for i in range(gridHeight)]
 	
@@ -46,6 +42,13 @@ def display_grid(head, appleX, appleY):
 
     #set the gid at the position of the apple to 2
     grid[appleX][appleY] = 2
+
+	#list of colours for each square type
+	colour_dict = {
+		0: (0,0,0);
+		1: (240,100,200);
+		2: (80,230,120)
+	}
 
     for i in range(0, gridWidth-1):
     	for j in range(0, gridHeight-1):
