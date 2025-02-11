@@ -24,39 +24,43 @@ def place_apple():
 
 
 def display_grid(head, appleX, appleY):
-
 #set grid to all 0s
     grid = [[0]*gridWidth for i in range(gridHeight)]
-	
+    
+#account for the position of the head of the worm
     segment = head
+    x = segment.getPos()[0]
+    y = segment.getPos()[1]
 
-	
-#loops through the entire worm and sets the elements in the grid to 1 where a segment is there
-    while segment.nextNode() not None:
-	    x = segment.getPos()[0]
-	    y = segment.getPos()[1]
-	
-	    grid[x][y] = 1
+    grid[x][y] = 1
 
-	    segment = segment.nextNode()
+    #loop through entire worm to set the squares in the grid to the correct value
+    while segment.nextNode() is not None:
+        x = segment.getPos()[0]
+        y = segment.getPos()[1]
 
-    #set the gid at the position of the apple to 2
+        grid[x][y] = 1
+
+        segment = segment.nextNode()
+
+    #add the identifier for the apple position
     grid[appleX][appleY] = 2
 
-	#list of colours for each square type
-	colour_dict = {
-		0: (0,0,0),
-		1: (240,100,200),
-		2: (80,230,120)
-	}
+    #map of colours for each square type
+    colour_map = {
+        0: (0,0,0),
+        1: (240,100,200),
+        2: (80,230,120)
+    }
 
-    for i in range(0, gridWidth-1):
-    	for j in range(0, gridHeight-1):
-    		colour = colour_dict[gid[i][j]]
-		#CALCULATE WORLD POSITION
-    		#DRAW SQUARE TO SCREEN
-            
-    
+    #loop for each square in the grid
+    for x in range(0, gridWidth-1):
+        for y in range(0, gridHeight-1):
+            #get colour at square
+            square_colour = colour_map[grid[x][y]]
+            #draw square to grid in the correct position
+            draw_square(x,y, 50, square_colour)
+
     #WRITE SCORE TO SCREEN
 
 
