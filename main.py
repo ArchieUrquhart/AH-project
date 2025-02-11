@@ -45,8 +45,8 @@ def display_grid(head, appleX, appleY):
 
 	#list of colours for each square type
 	colour_dict = {
-		0: (0,0,0);
-		1: (240,100,200);
+		0: (0,0,0),
+		1: (240,100,200),
 		2: (80,230,120)
 	}
 
