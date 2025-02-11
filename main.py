@@ -62,6 +62,10 @@ def display_grid(head, appleX, appleY):
             draw_square(x,y, 50, square_colour)
 
     #WRITE SCORE TO SCREEN
+    pg.font.init()
+    font = pg.font.Font(None, 100)
+    text = font.render("Score", True, (255, 255, 255))
+    window.blit(text, (0,0))
 
 
 
