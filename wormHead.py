@@ -3,23 +3,18 @@ from wormBody import Node
 def move_player(head):
     #iterate through the list from the begining
     segment = head
+    x = segment.getPos()[0]
+    y = segment.getPos()[1]
+
     while segment.nextNode() is not None:
-        # set the position of each node to that of the previous node
-        x = segment.getPos()[0]
-        y = segment.getPos()[1]
-
+        # set the position of each node to that of the previous node    
         segment = segment.nextNode()
-        segment.setPos(x,y)
         
-"""
-head = Node(0,0)
-node = head
-for i in range(10):
-    node.append()
-    node = node.nextNode()
+        newx = segment.getPos()[0]
+        newy = segment.getPos()[1]
 
-node = head
-for i in range(10):
-    node.append()
-    node = node.nextNode()
-"""
+        segment.setPos(x,y)
+
+        x = newx
+        y = newy
+
