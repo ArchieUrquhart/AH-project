@@ -172,6 +172,9 @@ def main():
 
         move_player(head)
 
+	if check_loss(head):
+		lost = True
+
         if direction == 'left':
             head.setPos(headx - 1, heady)
         elif direction == 'right':
