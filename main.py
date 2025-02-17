@@ -114,19 +114,21 @@ def draw_grid(grid):
 
 
     
+def check_loss(head):
+    targNode = head
+    headX = targNode.getPos()[0]
+    headY = targNode.getPos()[1]
 
-def gameLoop():
-    pass
-    #get key inputs 
+    if headX< 0 or headX>= gridWidth or headY<0 or headY>=gridHeight:
+        return True
+    else:
+        while targNode.nextNode() is not None:
+            targNode = targNode.nextNode()
+            if targNode.getPos[0] == headX and targNode.getPos[1] == headY:
+                return True
 
-    #move player 
-
-    #check colisions
-
-    #draw grid    
+    return False
     
-
-
 
 
 def main():
