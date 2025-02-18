@@ -73,6 +73,4 @@ else:
         print("")
 
 
-    add_game("'Owen Izedonmwen'",2900)
-    table = get_table()
-    print2dArray(table)
+
