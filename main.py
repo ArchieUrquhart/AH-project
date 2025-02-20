@@ -205,3 +205,12 @@ def game_loop():
 
 
 print(game_loop())
+
+closed = False
+while not closed:
+    #read database into 2d array
+    #display highscore table
+    #get inputs
+    #run game and get the score and username of the player
+    #INSET into table
+    pass
