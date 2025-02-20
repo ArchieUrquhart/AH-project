@@ -33,12 +33,12 @@ else:
         #init highscore table
         HighScores = [["", 0, 0] for i in range(cursor.rowcount)]
         #read select into 2d array
-        i = 0
+        row = 0
         for data in table_entries:
-            HighScores[i][0] = data[0]
-            HighScores[i][1] = data[1]
-            HighScores[i][2] = data[2]
-            i += 1
+            HighScores[row][0] = data[0]
+            HighScores[row][1] = data[1]
+            HighScores[row][2] = data[2]
+            row += 1
 
         sort_table(HighScores)
         return HighScores
