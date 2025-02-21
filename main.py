@@ -12,14 +12,14 @@ pg.display.set_caption("Worm")
 clock = pg.time.Clock()
 pg.font.init()
 
-# initialise the width and height for the game grid
+# initialise width and height of grid
 gridWidth, gridHeight = 11, 11
 
 #draw square procedure for readability
 def draw_square(x, y, square_size, colour):
-    #positions are multiplied by size to scale up the locations from array indexes to pixels on the screen
+    #positions multiplied by size to scale up locations from array indexes to pixels on screen
     x_pos = x * square_size
-    #positions are moved down to make room for the score
+    #positions moved down to make room for score
     y_pos = y * square_size + 100
 
     #draw square to screen at calculated position and chosen colour
@@ -40,26 +40,27 @@ def place_apple(grid):
     return appleX, appleY
 
 
-# draws the game grid and score to the window
+# draws grid and score to window
 def update_grid(head, appleX, appleY):
     # set grid to all 0s
     grid = [[0] * gridWidth for i in range(gridHeight)]
 
 
-    # loop through entire worm and identify all the segment position in the grid where a segment is present
+    #identify all squares with worm
+    #loop through worm
     segment = head
     while segment is not None:
-        #get the current x y position
+        #get current x y position
         x = segment.getPos()[0]
         y = segment.getPos()[1]
 
-        #set the element in the 2d array at that x y position to 1
+        #set 2d array at current position to 1
         grid[x][y] = 1
 
-        #go to the next segement in the list
+        #go to next segement in list
         segment = segment.nextNode()
 
-    # add the apple to the grid
+    # add apple to grid
     grid[appleX][appleY] = 2
 
     return grid
@@ -73,22 +74,22 @@ def draw_grid(grid, score):
         2: (80, 230, 120)
     }
 
-    # loop for each square in the grid
+    # loop for each square in grid
     for x in range(0, gridWidth):
         for y in range(0, gridHeight):
             # get colour at square
             square_colour = colour_map[grid[x][y]]
 
-            # draw square to grid in the correct position and colour
+            # draw square to grid at correct position and colour
             draw_square(x, y, 60, square_colour)
 
-    # writes players score to the window
+    # writes player's score to window
     font = pg.font.Font(None, 150)
     text = font.render("{}".format(score), True, (255, 255, 255))
     window.blit(text, (0, 0))
 
 
-# detects if the player is on the quare with the apple
+# detects if worm head is on square with apple
 def detect_eat(head,appleX,appleY):
     targNode = head
     #check if head position = apple position
@@ -96,7 +97,7 @@ def detect_eat(head,appleX,appleY):
         #find last node in list
         while targNode.nextNode() is not None:
             targNode = targNode.nextNode()
-        #add a new node to the end of the list
+        #add a new node to end of list
         targNode.append()
 
         return True
@@ -108,17 +109,18 @@ def detect_eat(head,appleX,appleY):
 def check_loss(head):
     targNode = head.nextNode()
 
-    #get the position of the head
+    #get position of head
     headX = head.getPos()[0]
     headY = head.getPos()[1]
 
-    #check if head is out of bounds of the grid
+    #check if head is out of bounds of grid
     if headX< 0 or headX>= gridWidth or headY<0 or headY>=gridHeight:
         return True
     else:
-        #loop through the whole worm
+        #loop through whole worm
         while targNode.nextNode() is not None:
             targNode = targNode.nextNode()
+            #check if segment intersects with head
             if targNode.getPos()[0] == headX and targNode.getPos()[1] == headY:
                 return True
 
@@ -126,25 +128,25 @@ def check_loss(head):
 
 
 def game_loop():
-    # initialsie the player
+    # initialsie player
     head = Node(gridWidth // 2, gridHeight // 2)
     head.append()
     head.nextNode().setPos(gridWidth // 2, gridHeight // 2 + 1)
     head.nextNode().append()
     direction = 'up'
 
-    # initialise the players score
+    # initialise player's score
     score = 0
 
-    #get the players username
-    username = ""
+    #get player's username
+    username = get_username()
 
-    # initialise the grid
+    # initialise grid with placeholder apple position
     grid = [[0] * gridWidth for i in range(gridHeight)]
     grid = update_grid(head, 0, 0)
     appleX, appleY = place_apple(grid)
 
-    #run game until a value is returned
+    #run game until value is returned
     lost = False
     while not lost:
         window.fill((0, 0, 0))
@@ -170,10 +172,10 @@ def game_loop():
         #get current position of head
         headx, heady = head.getPos()[0], head.getPos()[1]
 
-        #move all nodes except the head forward
+        #move all nodes except head forward
         move_player(head)
         
-        #move head node depending on the cuurent direction
+        #move head node depending on cuurent direction
         if direction == 'left':
             head.setPos(headx - 1, heady)
         elif direction == 'right':
@@ -190,14 +192,14 @@ def game_loop():
             #increase players score
             score = score + 100
 
-        #check if player has lost the game
+        #check if player has lost game
         if check_loss(head):
             return username, score
 
-        #update the squares on the grid to account for new positions of segments
+        #update squares on grid 
         grid = update_grid(head, appleX, appleY)
 
-        #draw the grid to the screen
+        #draw grid to screen
         draw_grid(grid, score)
         pg.display.update()
         clock.tick(5)
