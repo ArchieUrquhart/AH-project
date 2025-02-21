@@ -108,41 +108,6 @@ def draw_grid(grid, score):
     window.blit(text, (0, 0))
 
 
-# detects if the player is on the quare with the apple
-def detect_eat(head, appleX, appleY):
-    targNode = head
-    # check if head position = apple position
-    if head.getPos()[0] == appleX and head.getPos()[1] == appleY:
-        # find last node in list
-        while targNode.nextNode() is not None:
-            targNode = targNode.nextNode()
-        # add a new node to the end of the list
-        targNode.append()
-
-        return True
-
-    return False
-
-
-def check_loss(head):
-    targNode = head.nextNode()
-
-    # get the position of the head
-    headX = head.getPos()[0]
-    headY = head.getPos()[1]
-
-    # check if head is out of bounds of the grid
-    if headX < 0 or headX >= gridWidth or headY < 0 or headY >= gridHeight:
-        return True
-    else:
-        # loop through the whole worm
-        while targNode.nextNode() is not None:
-            targNode = targNode.nextNode()
-            if targNode.getPos()[0] == headX and targNode.getPos()[1] == headY:
-                return True
-
-    return False
-
 
 def game_loop():
     # initialsie the player
