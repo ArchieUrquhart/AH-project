@@ -1,5 +1,6 @@
 import mysql.connector
-#connect to database
+
+#connect to database - FR 1.1
 try:
     cnx = mysql.connector.connect(
         host="127.0.0.1",
@@ -22,15 +23,17 @@ else:
         cnx.commit()
 
         
-    #get highscore data from database
+    #get highscore data from database FR 1.2/ 1.3
     def get_table():
         cursor = cnx.cursor()
-        #query to get the required data for the highscore table
+        #query to get the required data for the highscore table - FR 1.2
         query = ("SELECT username, MAX(score) as 'highscore', count(*) as 'games_played' FROM gamedetails_testing GROUP BY username")
         cursor.execute(query)
         table_entries = cursor.fetchall()
 
-        #init highscore table
+        
+        #FR 1.3
+        #init highscore table 
         HighScores = [["", 0, 0] for i in range(cursor.rowcount)]
         #read select into 2d array
         row = 0
@@ -45,7 +48,7 @@ else:
         return HighScores
             
     
-    #sort 2d array
+    #sort 2d array - FR 1.4
     def sort_table(table):
         #the column in the table to be sorted by(score)
         field = 1
@@ -63,7 +66,7 @@ else:
     
             #insert row into correct position
             table[pos] = temp
-    
+
 """
     def print2dArray(arrayname):
         for i in range(len(arrayname)):
