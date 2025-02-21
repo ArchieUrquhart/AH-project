@@ -17,21 +17,41 @@ gridWidth, gridHeight = 11, 11
 
 def draw_table():
     window.fill((0,0,0))
-    size = 60
+
+    font = pg.font.Font(None, 100)
+    header = font.render("LEADERBOARD", True,(255,255,255))
+    window.blit(header,(70,30))
+
+    font = pg.font.Font(None, 50)
+    USERNAME = font.render("Username", True, (200, 40, 100))
+    HIGHSCORE = font.render("Highscore", True, (90, 150, 240))
+    GAMESPLAYED = font.render("Games", True, (230, 220, 70))
+
+    window.blit(USERNAME, (30, 150))
+    window.blit(HIGHSCORE, (280, 150))
+    window.blit(GAMESPLAYED, (500, 150))
+
+
+
+    size = 40
+    font = pg.font.Font(None, size)
 
     table = get_table()
     counter =0
     while counter < 10 and counter < len(table):
-        font = pg.font.Font(None, size)
-        username = font.render("{}".format(table[counter][0]), True, (255, 255, 255))
-        highscore = font.render("{}".format(table[counter][1]), True, (255, 255, 255))
-        games = font.render("{}".format(table[counter][2]), True, (255, 255, 255))
 
-        window.blit(username, (0, counter * size))
-        window.blit(highscore, (400, counter * size))
-        window.blit(games, (550, counter * size))
+        username = font.render("{}".format(table[counter][0]), True, (200, 40, 100))
+        highscore = font.render("{}".format(table[counter][1]), True, (90, 150, 240))
+        games = font.render("{}".format(table[counter][2]), True, (230, 220, 70))
+
+        window.blit(username, (30, counter * size +200))
+        window.blit(highscore, (330, counter * size +200))
+        window.blit(games, (550, counter * size +200))
 
         counter += 1
+
+    prompt = font.render("press any key to start", True, (70, 70, 70))
+    window.blit(prompt, (180,650))
 
     pg.display.update()
 
@@ -107,6 +127,41 @@ def draw_grid(grid, score):
     text = font.render("{}".format(score), True, (255, 255, 255))
     window.blit(text, (0, 0))
 
+
+# detects if the player is on the quare with the apple
+def detect_eat(head, appleX, appleY):
+    targNode = head
+    # check if head position = apple position
+    if head.getPos()[0] == appleX and head.getPos()[1] == appleY:
+        # find last node in list
+        while targNode.nextNode() is not None:
+            targNode = targNode.nextNode()
+        # add a new node to the end of the list
+        targNode.append()
+
+        return True
+
+    return False
+
+
+def check_loss(head):
+    targNode = head.nextNode()
+
+    # get the position of the head
+    headX = head.getPos()[0]
+    headY = head.getPos()[1]
+
+    # check if head is out of bounds of the grid
+    if headX < 0 or headX >= gridWidth or headY < 0 or headY >= gridHeight:
+        return True
+    else:
+        # loop through the whole worm
+        while targNode.nextNode() is not None:
+            targNode = targNode.nextNode()
+            if targNode.getPos()[0] == headX and targNode.getPos()[1] == headY:
+                return True
+
+    return False
 
 
 def game_loop():
