@@ -40,13 +40,14 @@ else:
             HighScores[row][2] = data[2]
             row += 1
 
+        #return the sorted table
         sort_table(HighScores)
         return HighScores
             
     
     #sort 2d array
     def sort_table(table):
-        #the column in the table to be sorted by 
+        #the column in the table to be sorted by(score)
         field = 1
     
         #interate through each row in the array
@@ -63,7 +64,7 @@ else:
             #insert row into correct position
             table[pos] = temp
     
-
+"""
     def print2dArray(arrayname):
         for i in range(len(arrayname)):
             row = ""
@@ -73,6 +74,6 @@ else:
             row = row[:-1]
             print(row)
         print("")
-
+"""
 
 
