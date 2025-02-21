@@ -26,7 +26,7 @@ def draw_square(x, y, square_size, colour):
     pg.draw.rect(window, colour, (x_pos, y_pos, square_size, square_size))
 
 
-# function to place apple in valid square
+# function to place apple in valid square - FR 5.2
 def place_apple(grid):
     # pick random X,Y coordinate
     appleX = randint(0, gridWidth - 1)
@@ -46,7 +46,7 @@ def update_grid(head, appleX, appleY):
     grid = [[0] * gridWidth for i in range(gridHeight)]
 
 
-    #identify all squares with worm
+    #identify all squares with worm - FR 3.4
     #loop through worm
     segment = head
     while segment is not None:
@@ -60,12 +60,12 @@ def update_grid(head, appleX, appleY):
         #go to next segement in list
         segment = segment.nextNode()
 
-    # add apple to grid
+    # add apple to grid - FR 5.3
     grid[appleX][appleY] = 2
 
     return grid
 
-
+#display the grid and score - FR 3.5
 def draw_grid(grid, score):
     # map of colours for each square type
     colour_map = {
@@ -89,6 +89,8 @@ def draw_grid(grid, score):
     window.blit(text, (0, 0))
 
 
+
+# the logic for the sequence of processes for the game
 def game_loop():
     # initialsie player
     head = Node(gridWidth // 2, gridHeight // 2)
@@ -115,13 +117,14 @@ def game_loop():
 
         #get inputs
         for event in pg.event.get():
-            # lose game if quit
+            # lose game if quit - FR 6.3
             if event.type == pg.QUIT:
                 return username, score
 
-            #get arrow key input
+            #get arrow key input - FR 3.1
             if event.type == pg.KEYDOWN:
                 # check that when a key is pressed it doesnt apose current direction
+                # change direction - FR 3.2
                 if event.key == pg.K_LEFT and direction != 'right':
                     direction = 'left'
                 elif event.key == pg.K_RIGHT and direction != 'left':
@@ -136,8 +139,8 @@ def game_loop():
 
         #move all nodes except head forward
         move_player(head)
-        
-        #move head node depending on cuurent direction
+            
+        #move head node depending on cuurent direction - FR 3.3
         if direction == 'left':
             head.setPos(headx - 1, heady)
         elif direction == 'right':
@@ -147,14 +150,14 @@ def game_loop():
         else:
             head.setPos(headx, heady + 1)
 
-        #check if player has eaten an apple
+        #check if player has eaten an apple  
         if detect_eat(head, appleX, appleY):
-            #replace apple
+            #replace apple FR 5.2
             appleX, appleY = place_apple(grid)
-            #increase players score
+            #increase players score - FR 4.2
             score = score + 100
 
-        #check if player has lost game
+        #check if player has lost game - FR 6.3
         if check_loss(head):
             return username, score
 
