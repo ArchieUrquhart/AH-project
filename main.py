@@ -15,6 +15,27 @@ pg.font.init()
 # initialise the width and height for the game grid
 gridWidth, gridHeight = 11, 11
 
+def draw_table():
+    window.fill((0,0,0))
+    size = 60
+
+    table = get_table()
+    counter =0
+    while counter < 10 and counter < len(table):
+        font = pg.font.Font(None, size)
+        username = font.render("{}".format(table[counter][0]), True, (255, 255, 255))
+        highscore = font.render("{}".format(table[counter][1]), True, (255, 255, 255))
+        games = font.render("{}".format(table[counter][2]), True, (255, 255, 255))
+
+        window.blit(username, (0, counter * size))
+        window.blit(highscore, (400, counter * size))
+        window.blit(games, (550, counter * size))
+
+        counter += 1
+
+    pg.display.update()
+
+
 
 # draw square procedure for readability
 def draw_square(x, y, square_size, colour):
@@ -25,7 +46,6 @@ def draw_square(x, y, square_size, colour):
 
     # draw square to screen at calculated position and chosen colour
     pg.draw.rect(window, colour, (x_pos, y_pos, square_size, square_size))
-
 
 # function to place apple in valid square
 def place_apple(grid):
@@ -205,18 +225,22 @@ def game_loop():
 
 closed = False
 while not closed:
+    draw_table()
+
     keypressed = False
     while not keypressed:
-        # get inputs
         for event in pg.event.get():
             # lose game if quit
             if event.type == pg.QUIT:
                 closed = True
+                keypressed=True
                 pg.quit()
-                
-            else:
+
+            if event.type == pg.KEYDOWN:
                 keypressed = True
-        
-    username, score = game_loop()
-    
-    add_game(username, score)
+
+    if not closed:
+        username, score = game_loop()
+
+        add_game(username, score)
+
