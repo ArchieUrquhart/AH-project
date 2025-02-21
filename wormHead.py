@@ -1,5 +1,6 @@
 from wormBody import Node
 
+#FR 3.3
 def move_player(head):
     #iterate through the list from the begining
     segment = head
@@ -20,7 +21,7 @@ def move_player(head):
 
 
 
-# detects if worm head is on square with apple
+# detects if worm head is on square with apple FR 5.1 & 4.1
 def detect_eat(head,appleX,appleY):
     targNode = head
     #check if head position = apple position
@@ -36,7 +37,7 @@ def detect_eat(head,appleX,appleY):
     return False
 
 
-# checks if player has met loss criteria
+# checks if player has met loss criteria FR 6.1/6,2
 def check_loss(head):
     targNode = head.nextNode()
 
@@ -44,11 +45,12 @@ def check_loss(head):
     headX = head.getPos()[0]
     headY = head.getPos()[1]
 
-    #check if head is out of bounds of grid
+    #check if head is out of bounds of grid - FR 6.1
     if headX< 0 or headX>= gridWidth or headY<0 or headY>=gridHeight:
         return True
     else:
-        #loop through whole worm
+        #Check if worm has hit the body - FR 6.2
+        #loop through whole worm 
         while targNode.nextNode() is not None:
             targNode = targNode.nextNode()
             #check if segment intersects with head
