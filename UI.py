@@ -41,3 +41,6 @@ def get_username():
 
     return username
 
+
+    return username
+
