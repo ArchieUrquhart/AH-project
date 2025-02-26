@@ -15,8 +15,12 @@ pg.font.init()
 # initialise the width and height for the game grid
 gridWidth, gridHeight = 11, 11
 
+
+
+
+
 #draw the game grid - FR 1.5
-def draw_table():
+def draw_table(HighScores):
     #fill background colour
     window.fill((0,0,0))
 
@@ -39,18 +43,15 @@ def draw_table():
     size = 40
     font = pg.font.Font(None, size)
 
-    #get sorted database values
-    table = get_table()
-
 
     #start from best player
     counter =0
     #display top 10 players or the number of players if fewer than 10 players have played
-    while counter < 10 and counter < len(table):
+    while counter < 10 and counter < len(HighScores):
         #display the current players username score and played games to screen
-        username = font.render("{}".format(table[counter][0]), True, (200, 40, 100))
-        highscore = font.render("{}".format(table[counter][1]), True, (90, 150, 240))
-        games = font.render("{}".format(table[counter][2]), True, (230, 220, 70))
+        username = font.render("{}".format(HighScores[counter][0]), True, (200, 40, 100))
+        highscore = font.render("{}".format(HighScores[counter][1]), True, (90, 150, 240))
+        games = font.render("{}".format(HighScores[counter][2]), True, (230, 220, 70))
 
         window.blit(username, (30, counter * size +200))
         window.blit(highscore, (330, counter * size +200))
@@ -67,15 +68,9 @@ def draw_table():
 
 
 
-# draw square procedure for readability
-def draw_square(x, y, square_size, colour):
-    # positions are multiplied by size to scale up the locations from array indexes to pixels on the screen
-    x_pos = x * square_size
-    # positions are moved down to make room for the score
-    y_pos = y * square_size + 100
 
-    # draw square to screen at calculated position and chosen colour
-    pg.draw.rect(window, colour, (x_pos, y_pos, square_size, square_size))
+
+
 
 
 # function to place apple in valid square
@@ -91,6 +86,9 @@ def place_apple(grid):
 
     #return validated x y position of apple
     return appleX, appleY
+
+
+
 
 
 # draws the game grid and score to the window
@@ -117,6 +115,8 @@ def update_grid(head, appleX, appleY):
     return grid
 
 
+
+
 def draw_grid(grid, score):
     # map of colours for each square type
     colour_map = {
@@ -130,46 +130,39 @@ def draw_grid(grid, score):
         for y in range(0, gridHeight):
             # get the colour of square
             square_colour = colour_map[grid[x][y]]
+            square_size = 60
 
             # draw square to grid in the correct position and colour
-            draw_square(x, y, 60, square_colour)
+            # positions are multiplied by size to scale up the locations from array indexes to pixels on the screen
+            x_pos = x * square_size
+            # positions are moved down to make room for the score
+            y_pos = y * square_size + 100
 
-    # writes players score to the window
+            # draw square to screen at calculated position and chosen colour
+            pg.draw.rect(window, square_colour, (x_pos, y_pos, square_size, square_size))
+
+    # writes players score to the topleft of window
     font = pg.font.Font(None, 150)
     text = font.render("{}".format(score), True, (255, 255, 255))
     window.blit(text, (0, 0))
 
 
-# detects if the player is on the square with the apple
-def detect_eat(head, appleX, appleY):
-    targNode = head
-    # check if head position = apple position
-    if head.getPos()[0] == appleX and head.getPos()[1] == appleY:
-        # get last node in list
-        while targNode.nextNode() is not None:
-            targNode = targNode.nextNode()
-        # add a new node to the end of the list
-        targNode.append()
-
-        return True
-
-    return False
 
 
 
 def game_loop():
-    # initialsie the player
-    head = Node(gridWidth // 2, gridHeight // 2)
-    head.append()
-    head.nextNode().setPos(gridWidth // 2, gridHeight // 2 + 1)
-    direction = 'up'
-
     # initialise the players score
     score = 0
 
     # get the players username
     username = get_username()
     if username != '':
+        # initialsie the player
+        head = Node(gridWidth // 2, gridHeight // 2)
+        head.append()
+        head.nextNode().setPos(gridWidth // 2, gridHeight // 2 + 1)
+        direction = 'up'
+
         # initialise the grid and apple position
         grid = [[0] * gridWidth for i in range(gridHeight)]
         grid = update_grid(head, 0, 0)
@@ -239,7 +232,8 @@ def game_loop():
 
 closed = False
 while not closed:
-    draw_table()
+    table = get_table()
+    draw_table(table)
 
     # 
     keypressed = False
@@ -260,4 +254,3 @@ while not closed:
             add_game(username, score)
         else:
             closed = True
-
