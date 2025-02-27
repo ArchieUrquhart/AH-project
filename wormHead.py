@@ -23,6 +23,7 @@ def move_player(head):
 
 # detects if worm head is on square with apple FR 5.1 & 4.1
 def detect_eat(head, appleX, appleY):
+    # add new segment to the worm - FR 4.3
     targNode = head
     # check if head position = apple position
     if head.getPos()[0] == appleX and head.getPos()[1] == appleY:
