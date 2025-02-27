@@ -72,7 +72,6 @@ def draw_table(HighScores):
 
 
 
-
 # function to place apple in valid square - FR 5.2
 def place_apple(grid):
     # pick random X,Y coordinate
@@ -86,6 +85,7 @@ def place_apple(grid):
 
     #return validated x y position of apple
     return appleX, appleY
+
 
 
 
@@ -113,6 +113,8 @@ def update_grid(head, appleX, appleY):
     grid[appleX][appleY] = 2
 
     return grid
+
+
 
 
 
@@ -144,6 +146,8 @@ def draw_grid(grid, score):
     font = pg.font.Font(None, 150)
     text = font.render("{}".format(score), True, (255, 255, 255))
     window.blit(text, (0, 0))
+
+
 
 
 
@@ -206,14 +210,14 @@ def game_loop():
             else:
                 head.setPos(headx, heady + 1)
 
-            # check if player has eaten an apple - FR 4.1/5.1
+            # check if player has eaten an apple - FR 4.1, FR 5.1
             if detect_eat(head, appleX, appleY):
                 # replace apple - FR 5.2
                 appleX, appleY = place_apple(grid)
                 # increase players score - 4.2
                 score = score + 100
 
-            # check if player has lost the game - FR 6.1/6.2
+            # check if player has lost the game - FR 6.1, FR 6.2
             if check_loss(head,grid):
                 return username, score
 
@@ -228,27 +232,33 @@ def game_loop():
     return username, score
 
 
-
+#reoeat until game closed
 closed = False
 while not closed:
+    #get table from database and draw it - FR 1.1 -> 1.5
     table = get_table()
     draw_table(table)
     
     keypressed = False
     while not keypressed:
         for event in pg.event.get():
-            # lose game if quit
+            # end game if quit - FR 1.6
             if event.type == pg.QUIT:
                 closed = True
                 keypressed=True
                 pg.quit()
-
+            # end loop is key pressed
             if event.type == pg.KEYDOWN:
                 keypressed = True
 
     if not closed:
+        # get the game details by starting a new game
         username, score = game_loop()
+
+        # check if username was not null
         if username != '':
+            # insert game details into table - Fr 2.3
             add_game(username, score)
         else:
+            # if no username was entered 
             closed = True
