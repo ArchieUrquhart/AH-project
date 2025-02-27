@@ -14,7 +14,7 @@ except mysql.connector.Error as err:
     print("Error with connection: {}".format(err))
 
 else:
-    # run insert
+    # run insert - FR 2.3
     def add_game(game_username, game_score):
         cursor = cnx.cursor()
         # query to insert the username and score of the player who just played
@@ -32,10 +32,10 @@ else:
         cursor.execute(query)
         table_entries = cursor.fetchall()
 
-        # FR 1.3
         # init highscore table
         HighScores = [["", 0, 0] for i in range(cursor.rowcount)]
-        # read select into 2d array
+        
+        # read select into 2d array - FR 1.2
         row = 0
         for data in table_entries:
             HighScores[row][0] = data[0]
