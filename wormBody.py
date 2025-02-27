@@ -1,3 +1,4 @@
+#class for each segment in the worm
 class Node:
     #constructor method for Node class
     def __init__(self,xPos,yPos):
