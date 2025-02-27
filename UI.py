@@ -2,7 +2,7 @@ import re
 from tkinter import *
 
 
-#function to validate username
+#function to validate username - FR 2.2
 def valid_name(username):
     #check the length of username and regex to check if there any special characters
     if len(username) > 15 or len(username) < 4 or re.search("\W",username):
@@ -10,6 +10,7 @@ def valid_name(username):
     else:
         return True
 
+#return username when button pressed
 def get_input(root, inputtxt, label):
     global username
     input = inputtxt.get("1.0", "end-1c")
@@ -19,7 +20,7 @@ def get_input(root, inputtxt, label):
     else:
         label.configure(text="Please re-enter your username")
 
-
+# FR 2.1
 def get_username():
     global username
     username = ""
