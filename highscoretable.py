@@ -14,16 +14,16 @@ except mysql.connector.Error as err:
     print("Error with connection: {}".format(err))
 
 else:
-    # run insert - FR 2.3
+    # run insert
     def add_game(game_username, game_score):
         cursor = cnx.cursor()
-        # query to insert the username and score of the player who just played
+        # query to insert the username and score of the player who just played - FR 2.3
         query = ("INSERT INTO gamedetails_testing(username, score) VALUES ('{}',{})".format(game_username, game_score))
         cursor.execute(query)
         cnx.commit()
 
 
-    # get highscore data from database FR 1.2/ 1.3
+    # get highscore data from database - FR 1.2/ 1.3
     def get_table():
         cursor = cnx.cursor()
         # query to get the required data for the highscore table - FR 1.2
@@ -32,10 +32,10 @@ else:
         cursor.execute(query)
         table_entries = cursor.fetchall()
 
+        # FR 1.3
         # init highscore table
         HighScores = [["", 0, 0] for i in range(cursor.rowcount)]
-        
-        # read select into 2d array - FR 1.2
+        # read select into 2d array
         row = 0
         for data in table_entries:
             HighScores[row][0] = data[0]
@@ -64,4 +64,3 @@ else:
 
             # insert row into correct position
             table[pos] = temp
-
