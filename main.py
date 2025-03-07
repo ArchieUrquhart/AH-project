@@ -22,18 +22,18 @@ gridWidth, gridHeight = 11, 11
 #draw the game grid - FR 1.5
 def draw_table(HighScores):
     #fill background colour
-    window.fill((0,0,0))
+    window.fill((255,255,255))
 
     #write 'LEADERBOARD' to the screen
     font = pg.font.Font(None, 100)
-    header = font.render("LEADERBOARD", True,(255,255,255))
+    header = font.render("LEADERBOARD", True,(0,0,0))
     window.blit(header,(70,30))
 
     #write field headings to screen
     font = pg.font.Font(None, 50)
     USERNAME = font.render("Username", True, (200, 40, 100))
     HIGHSCORE = font.render("Highscore", True, (90, 150, 240))
-    GAMESPLAYED = font.render("Games", True, (230, 220, 70))
+    GAMESPLAYED = font.render("Games", True, (200, 190, 40))
 
     window.blit(USERNAME, (30, 150))
     window.blit(HIGHSCORE, (280, 150))
@@ -51,7 +51,7 @@ def draw_table(HighScores):
         #display the current players username score and played games to screen
         username = font.render("{}".format(HighScores[counter][0]), True, (200, 40, 100))
         highscore = font.render("{}".format(HighScores[counter][1]), True, (90, 150, 240))
-        games = font.render("{}".format(HighScores[counter][2]), True, (230, 220, 70))
+        games = font.render("{}".format(HighScores[counter][2]), True, (200, 190, 40))
 
         window.blit(username, (30, counter * size +200))
         window.blit(highscore, (330, counter * size +200))
@@ -120,7 +120,7 @@ def update_grid(head, appleX, appleY):
 def draw_grid(grid, score):
     # map of colours for each square type
     colour_map = {
-        0: (20, 20, 30),
+        0: (255, 255, 255),
         1: (240, 100, 200),
         2: (80, 230, 120)
     }
@@ -144,7 +144,7 @@ def draw_grid(grid, score):
 
     # writes players score to the topleft of window
     font = pg.font.Font(None, 150)
-    text = font.render("{}".format(score), True, (255, 255, 255))
+    text = font.render("{}".format(score), True, (0, 0, 0))
     window.blit(text, (0, 0))
 
 
@@ -173,7 +173,7 @@ def game_loop():
     # run game until player loses or quits
     lost = False
     while not lost:
-        window.fill((0, 0, 0))
+        window.fill((200, 200, 200))
 
         # get inputs
         for event in pg.event.get():
