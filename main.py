@@ -1,7 +1,6 @@
 from wormHead import *
 from UI import *
 from highscoretable import *
-
 from random import randint
 import pygame as pg
 
