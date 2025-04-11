@@ -180,7 +180,7 @@ def game_loop():
             if event.type == pg.QUIT:
                 return username, score
 
-            # get arrow key input
+            # get arrow key input - FR 3.1
             if event.type == pg.KEYDOWN:
                 # check that when a key is pressed it doesn't oppose current direction
                 if event.key == pg.K_LEFT and direction != 'right':
@@ -198,7 +198,7 @@ def game_loop():
         # move all nodes except the head forward
         move_player(head)
 
-        # move head node depending on the current direction
+        # move head node depending on the current direction - FR 3.2
         if direction == 'left':
             head.setPos(headx - 1, heady)
         elif direction == 'right':
@@ -208,7 +208,7 @@ def game_loop():
         else:
             head.setPos(headx, heady + 1)
 
-        # check if player has eaten an apple
+        # check if player has eaten an apple - FR 4.1 & 5.1
         if detect_eat(head, appleX, appleY):
             # replace apple
             appleX, appleY = place_apple(grid)
